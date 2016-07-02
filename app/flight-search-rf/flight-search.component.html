@@ -1,0 +1,53 @@
+<h1>Flight Search! (RF)</h1>
+
+
+<form [formGroup]="filter">
+
+    <div class="form-group">
+        <label>From</label>
+        <input 
+            formControlName="from" 
+            class="form-control">
+
+        <div *ngIf="!filter.controls.from.valid">
+            not valid!
+        </div>     
+
+        <div *ngIf="filter.controls.from.hasError('required')">
+            required
+        </div>     
+
+        <div *ngIf="filter.controls.from.hasError('minlength')">
+            minlength
+        </div>     
+
+        <div *ngIf="filter.controls.from.hasError('maxlength')">
+            maxlength
+        </div>     
+
+        <div *ngIf="filter.controls.from.hasError('pattern')">
+            pattern
+        </div>     
+               
+    </div>    
+
+    <div class="form-group">
+        <label>To</label>
+        <input formControlName="to" ngControl="to" class="form-control">
+    </div>    
+
+    <div class="form-group">
+        <button (click)="search()" class="btn btn-default">Search!</button>
+    </div>    
+</form>
+
+<table class="table table-striped">
+    <!-- for(let flight of flights) -->
+    <tr *ngFor="let flight of flights">
+        <td>{{flight.id}}</td>
+        <td>{{flight.date}}</td>
+        <td>{{flight.from}}</td>
+        <td>{{flight.to}}</td>
+        <td><a [routerLink]="['../flight-edit', flight.id]">Edit</a></td>
+    </tr>
+</table>    

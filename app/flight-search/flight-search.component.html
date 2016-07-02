@@ -1,0 +1,75 @@
+<h1>Flight Search!</h1>
+
+
+<form #f="ngForm">
+
+    <div class="form-group">
+        <label>From</label>
+        <input 
+            [(ngModel)]="from" 
+            name="from" 
+            class="form-control"
+            required
+            minlength="3"
+            maxlength="30"
+            pattern="[A-Z0-9a-z\-]*">
+
+        <div *ngIf="!f?.controls?.from?.valid">
+            not valid!
+        </div>     
+
+        <div *ngIf="f?.controls?.from?.hasError('required')">
+            required!
+        </div>     
+
+        <div *ngIf="f?.controls?.from?.hasError('minlength')">
+            minlength!
+        </div>     
+
+        <div *ngIf="f?.controls?.from?.hasError('maxlength')">
+            maxlength!
+        </div>     
+
+        <div *ngIf="f?.controls?.from?.hasError('pattern')">
+            pattern!
+        </div>     
+               
+    </div>    
+
+    <div class="form-group">
+        <label>To</label>
+        <input [(ngModel)]="to" name="to" class="form-control">
+    </div>    
+
+    <div class="form-group">
+        <button (click)="search()" class="btn btn-default" [disabled]="!from || !to">Search!</button>
+        <button (click)="delay()" class="btn btn-default">Delay!</button>
+    </div>    
+</form>
+
+<div class="row">
+    <div *ngFor="let flight of flights$ | async" class="col-sm-4">
+        <flight-card
+            [item]="flight"
+            [selectedItem]="selectedFlight"
+            (selectedItemChange)="selectedFlight = $event">
+        </flight-card>
+    </div>
+</div>
+<!--
+<table class="table table-striped">
+    <tr *ngFor="let flight of flights">
+        <td>{{flight.id}}</td>
+        <td>{{flight.date}}</td>
+        <td>{{flight.from}}</td>
+        <td>{{flight.to}}</td>
+        <td><a [routerLink]="['../flight-edit', flight.id]">Edit</a></td>
+    </tr>
+</table>    
+-->
+<p>&nbsp;</p>
+
+<pre class="row">Shopping Basket
+-------------------
+{{selectedFlight | json}}    
+</pre>    
